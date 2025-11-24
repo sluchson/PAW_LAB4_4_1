@@ -53,6 +53,33 @@ app.get("/math/rectangle/:width/:height", (req, res) => {
 });
 
 //TODO3
+app.get("/math/power/:base/:exponent", (req, res) => {
+    const baseAsString = req.params.base;
+    const exponentAsString = req.params.exponent;
+
+    const base = parseFloat(baseAsString);
+    const exponent = parseFloat(exponentAsString);
+
+    if (isNaN(base) || isNaN(exponent)) {
+        return res.status(400).json({
+            error: "Invalid input",
+            details: "Oczekiwane są dwie liczby dla podstawy i wykładnika.",
+        });
+    }
+
+    const powerResult = Math.pow(base, exponent);
+
+    const result = {
+        result: powerResult,
+    };
+
+    if (req.query.root === "true") {
+        const rootResult = Math.sqrt(base);
+        result.root = rootResult;
+    }
+
+    res.json(result);
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
