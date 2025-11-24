@@ -28,6 +28,29 @@ app.get("/math/circle/:r", (req, res) => {
 });
 
 //TODO2
+// rectangle endpoint
+app.get("/math/rectangle/:width/:height", (req, res) => {
+    const widthAsString = req.params.width;
+    const heightAsString = req.params.height;
+    const width = parseFloat(widthAsString);
+    const height = parseFloat(heightAsString);
+    if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0)
+        return res.status(400).json({
+            error: "Niepoprawne wartości boków prostokąta. Oczekiwane są liczby dodatnie.",
+            input: widthAsString,
+            input: heightAsString,
+        });
+
+    const area = width * height;
+    const parimeter = 2 * (width + height);
+
+    const result = {
+        area: area.toFixed(2),
+        parimeter: parimeter.toFixed(2),
+    };
+
+    res.json(result);
+});
 
 //TODO3
 
